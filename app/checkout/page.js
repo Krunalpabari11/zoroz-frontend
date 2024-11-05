@@ -1,17 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import { loadStripe } from '@stripe/stripe-js';
-
+i
 export default function Checkout() {
   const getStripe = async () => {
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
     return stripe;
   };
 
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   const [product, setProduct] = useState(null);
@@ -19,8 +18,8 @@ export default function Checkout() {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [error, setError] = useState(null);
 
-  const productId = searchParams.get('id');
-
+  const url=new URL(window.location.href);
+  const productId=url.searchParams.get('id');
   useEffect(() => {
     console.log(productId + ' working');
     if (productId) {
@@ -98,4 +97,4 @@ export default function Checkout() {
       </div>
     </div>
   );
-} 
+}
